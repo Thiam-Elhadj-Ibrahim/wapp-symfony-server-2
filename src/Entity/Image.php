@@ -4,23 +4,23 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\ResourceEntity;
-use App\Repository\KeywordRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=KeywordRepository::class)
+ * @ORM\Entity(repositoryClass=ImageRepository::class)
  * @ApiResource(
  *    paginationMaximumItemsPerPage=15,
  *    normalizationContext={
  *        "groups"={
- *            "keyword:read"
+ *            "image:read"
  *        }
  *     },
  *     denormalizationContext={
  *        "groups"={
- *            "keyword:write"
+ *            "image:write"
  *        }
  *     },
  *     collectionOperations={
@@ -34,29 +34,27 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  */
-class Keyword
+class Image
 {
     use ResourceEntity;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"keyword:read", "user:read"})
+     * @Groups({"image:read", "user:read",})
      */
     private $id;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"keyword:read", "keyword:write", "user:read", "user:write"})
+     * @ORM\Column(type="text")
+     * @Groups({"image:read", "image:write", "user:read", "user:write"})
      * @Assert\NotBlank()
      */
-    private $value;
+    private $url;
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="keywords")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="images")
      */
     private $user;
 
@@ -71,18 +69,18 @@ class Keyword
     /**
      * @return string|null
      */
-    public function getValue(): ?string
+    public function getUrl(): ?string
     {
-        return $this->value;
+        return $this->url;
     }
 
     /**
-     * @param string $value
+     * @param string $url
      * @return $this
      */
-    public function setValue(string $value): self
+    public function setUrl(string $url): self
     {
-        $this->value = $value;
+        $this->url = $url;
 
         return $this;
     }

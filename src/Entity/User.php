@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\ResourceEntity;
+use App\Controller\Api\UserKeywordsController;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
+ *     paginationMaximumItemsPerPage=15,
  *     normalizationContext={
  *         "groups"={
  *             "user:read"
@@ -26,13 +28,17 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         }
  *     },
  *     collectionOperations={
- *         "get",
  *         "post"
  *     },
  *     itemOperations={
- *         "get",
  *         "put",
- *         "patch"
+ *         "patch",
+ *         "get",
+ *         "get_user_with_keywords"={
+ *             "method"="GET",
+ *             "path"="/user/{id}/keywords",
+ *             "controller"=UserKeywordsController::class
+ *         }
  *     }
  * )
  */
@@ -168,13 +174,33 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Keyword::class, mappedBy="user")
-     * @Groups({"user:read"})
+     * @Groups({"user:read", "user:keywords:read"})
      */
     private $keywords;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="userFrom")
+     * @Groups({"user:read"})
+     */
+    private $conversationsFrom;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="userTo")
+     * @Groups({"user:read"})
+     */
+    private $conversationsTo;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="user")
+     * @Groups({"user:read"})
+     */
+    private $images;
 
     public function __construct()
     {
         $this->keywords = new ArrayCollection();
+        $this->conversationsFrom = new ArrayCollection();
+        $this->conversationsTo = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -519,4 +545,98 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getConversationsFrom(): Collection
+    {
+        return $this->conversationsFrom;
+    }
+
+    public function addConversationFrom(Conversation $conversation): self
+    {
+        if (!$this->conversationsFrom->contains($conversation)) {
+            $this->conversationsFrom[] = $conversation;
+            $conversation->setUserFrom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversationFrom(Conversation $conversation): self
+    {
+        if ($this->conversationsFrom->contains($conversation)) {
+            $this->conversationsFrom->removeElement($conversation);
+            // set the owning side to null (unless already changed)
+            if ($conversation->getUserFrom() === $this) {
+                $conversation->setUserFrom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversation[]
+     */
+    public function getConversationsTo(): Collection
+    {
+        return $this->conversationsTo;
+    }
+
+    public function addConversationTo(Conversation $conversation): self
+    {
+        if (!$this->conversationsTo->contains($conversation)) {
+            $this->conversationsTo[] = $conversation;
+            $conversation->setUserFrom($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConversationTo(Conversation $conversation): self
+    {
+        if ($this->conversationsTo->contains($conversation)) {
+            $this->conversationsTo->removeElement($conversation);
+            // set the owning side to null (unless already changed)
+            if ($conversation->getUserFrom() === $this) {
+                $conversation->setUserFrom(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getUser() === $this) {
+                $image->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
