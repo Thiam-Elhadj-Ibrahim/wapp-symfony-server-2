@@ -47,7 +47,7 @@ class Image
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"image:read", "image:write", "user:read", "user:write"})
+     * @Groups({"image:read", "image:write", "user:read"})
      * @Assert\NotBlank()
      */
     private $url;

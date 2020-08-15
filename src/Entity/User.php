@@ -33,12 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     itemOperations={
  *         "put",
  *         "patch",
- *         "get",
- *         "get_user_with_keywords"={
- *             "method"="GET",
- *             "path"="/user/{id}/keywords",
- *             "controller"=UserKeywordsController::class
- *         }
+ *         "get"
  *     }
  * )
  */
@@ -174,19 +169,17 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Keyword::class, mappedBy="user")
-     * @Groups({"user:read", "user:keywords:read"})
+     * @Groups({"user:read"})
      */
     private $keywords;
 
     /**
      * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="userFrom")
-     * @Groups({"user:read"})
      */
     private $conversationsFrom;
 
     /**
      * @ORM\OneToMany(targetEntity=Conversation::class, mappedBy="userTo")
-     * @Groups({"user:read"})
      */
     private $conversationsTo;
 

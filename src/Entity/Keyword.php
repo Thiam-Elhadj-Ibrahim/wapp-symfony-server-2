@@ -2,37 +2,41 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\ResourceEntity;
 use App\Repository\KeywordRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=KeywordRepository::class)
  * @ApiResource(
- *    paginationMaximumItemsPerPage=15,
- *    normalizationContext={
- *        "groups"={
- *            "keyword:read"
- *        }
+ *     paginationMaximumItemsPerPage=15,
+ *     normalizationContext={
+ *         "groups"={
+ *             "keyword:read"
+ *         }
  *     },
  *     denormalizationContext={
- *        "groups"={
- *            "keyword:write"
- *        }
+ *         "groups"={
+ *             "keyword:write"
+ *         }
  *     },
  *     collectionOperations={
- *        "get",
- *        "post"
+ *         "post"
  *     },
  *     itemOperations={
- *        "get",
- *        "put",
- *        "patch"
+ *         "get",
+ *         "put",
+ *         "patch"
  *     }
  * )
+ * @ApiFilter(SearchFilter::class, properties={"user.id": "exact"})
+ * @ApiFilter(OrderFilter::class, properties={"createdAt"={"default_direction": "DESC"}})
  */
 class Keyword
 {
@@ -49,7 +53,7 @@ class Keyword
     /**
      * @var string
      * @ORM\Column(type="string", length=30)
-     * @Groups({"keyword:read", "keyword:write", "user:read", "user:write"})
+     * @Groups({"keyword:read", "keyword:write", "user:read"})
      * @Assert\NotBlank()
      */
     private $value;

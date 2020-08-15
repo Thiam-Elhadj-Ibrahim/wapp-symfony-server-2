@@ -21,12 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="72e36e9b-f464-4bd5-8c6e-8c3cdcac2663" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes/api_platform.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20200814065321.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Image.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Image.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Keyword.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Keyword.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Traits/ResourceEntity.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Traits/ResourceEntity.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -158,7 +154,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1597372869167</updated>
-      <workItem from="1597372896413" duration="35221000" />
+      <workItem from="1597372896413" duration="40272000" />
     </task>
     <servers />
   </component>
@@ -189,9 +185,9 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="91" y="132" key="NewPhpClassDialog/0.30.1366.738@0.30.1366.738" timestamp="1597443706682" />
-    <state x="339" y="180" key="run.anything.popup" timestamp="1597383265682">
+    <state x="339" y="180" key="run.anything.popup" timestamp="1597456486546">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="339" y="180" key="run.anything.popup/0.30.1366.738@0.30.1366.738" timestamp="1597383265682" />
+    <state x="339" y="180" key="run.anything.popup/0.30.1366.738@0.30.1366.738" timestamp="1597456486546" />
   </component>
 </project>
